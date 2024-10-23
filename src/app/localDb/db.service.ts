@@ -38,6 +38,17 @@ export class dbService {
   }
 
 
+  changeUserPassword(user:user){
+    let index = this.users.findIndex((i:user)=> i.email.toLowerCase() ===user.email.toLowerCase())
+    if(index < 0)
+      return false
+    else
+    {
+      this.users[index].password = user.password
+      return true;
+    }
+  }
+
   
 
 }

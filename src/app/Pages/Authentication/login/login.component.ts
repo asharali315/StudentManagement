@@ -11,10 +11,11 @@ import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastnotificationService } from '../../../Service/toastnotification.service';
 import { AuthenticationService } from '../../../Service/authentication.service';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatCardModule,MatButtonModule,MatFormFieldModule, MatInputModule, FormsModule, MatIconModule,CommonModule],
+  imports: [MatCardModule,MatButtonModule,RouterModule,MatFormFieldModule, MatInputModule, FormsModule, MatIconModule,CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -34,7 +35,6 @@ export class LoginComponent {
  ){}
 
  loginSubmit(){
-  console.log(this.userLogInData)
   if(this.userLogInData.email === '' || this.userLogInData.password === '')
   {
     this._notificationSerice.push('Email or password is missing','2')

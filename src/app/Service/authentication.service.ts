@@ -45,4 +45,12 @@ export class AuthenticationService {
   }
 
 
+  getUser(email:string)
+  {
+    return this._dbService.getUsers().filter((i:user) => i.email.toLowerCase() === email)[0]
+  }
+
+  changeUserPassword(user:user){
+    return this._dbService.changeUserPassword(user);
+  }
 }

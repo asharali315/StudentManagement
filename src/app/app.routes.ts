@@ -6,6 +6,11 @@ import { AdmindashboardComponent } from './Pages/AdminDashboard/admindashboard/a
 
 export const routes: Routes = [
     {
+        path:'',
+        redirectTo:'login',
+        pathMatch : 'full'
+    },
+    {
         path:'login',
         component:LoginComponent
     },
