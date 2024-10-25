@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { user } from '../model/user.model';
 import { role, userrole } from '../model/role.model';
+import { roleRoutes, routes } from '../model/userroutes.model';
+import { course, studentWithCourse, teacherCourse } from '../model/course.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +20,53 @@ export class dbService {
 
   private userRoles : userrole[] = [
     {id:1,userId : 1,roleId:1},
-    {id:2,userId : 1,roleId:2}
+    // {id:2,userId : 1,roleId:2}
   ]
+
+ private route : routes[] = [
+  {id:0,name:"Dashboard",url:'/user/dashboard'},
+  {id:1,name:"Users",url:'/user/userlist'},
+  {id:2,name:"Leaves Request",url:'/user/studentleave'},
+  {id:3,name:"Roles",url:'/user/role'},
+  {id:4,name:"Leaves Request",url:'/user/leave'},
+  {id:7,name:"profile",url:'/user/profile'},
+  {id:10,name:"Courses",url:'/user/courses'},
+  {id:11,name:"Assign Course",url:'/user/assigncourses'},
+
+]
+
+private roleWiseRoute : roleRoutes[] = [
+  {id:1,routeId:0,roleId:1},
+  {id:1,routeId:0,roleId:2},
+  {id:1,routeId:0,roleId:3},
+  {id:1,routeId:1,roleId:1},
+  {id:1,routeId:2,roleId:1},
+  {id:1,routeId:3,roleId:1},
+  {id:1,routeId:4,roleId:3},
+  {id:1,routeId:4,roleId:2},
+  {id:1,routeId:2,roleId:2},
+  {id:1,routeId:7,roleId:3},
+  {id:1,routeId:7,roleId:1},
+  {id:1,routeId:7,roleId:2},
+  {id:1,routeId:10,roleId:1},
+  {id:1,routeId:11,roleId:1},
+]
+
+
+private courses: course[] = [
+  {id:1,name:'Mobile Dev',sessionName:'2024'},
+  {id:2,name:'Web Dev',sessionName:'2024'},
+  {id:3,name:'Mobile Dev',sessionName:'2023'},
+  {id:3,name:'Web Dev',sessionName:'2023'},
+]
+private teacherCourses: teacherCourse[] = [
+  
+]
+private studentCourses: studentWithCourse[] = [
+  
+]
+
+
 
   constructor() { }
 
@@ -49,6 +96,32 @@ export class dbService {
     }
   }
 
-  
+
+  getUserRoutes(roleId:number){
+   let routeIds = this.roleWiseRoute.filter((i:roleRoutes)=> i.roleId == roleId).map((i:roleRoutes)=> {return i.routeId})
+ 
+    return this.route.filter((i:routes) => routeIds.includes(i.id))
+  }
+
+
+  getUsersCount(){
+    let userCount = {
+      totalUsers:0,
+      totalStudents: 0,
+      totalTeachers: 0
+    }
+
+    userCount.totalUsers = this.users.length
+    this.userRoles.forEach((i:userrole)=>{
+      if(i.roleId ==3)
+        userCount.totalStudents +=1;
+      else if(i.roleId == 2)
+        userCount.totalTeachers +=1;
+
+    })
+
+    return  userCount
+  }
+
 
 }

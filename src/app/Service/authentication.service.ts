@@ -3,11 +3,14 @@ import { loginModel } from '../model/login.model';
 import { dbService } from '../localDb/db.service';
 import { user } from '../model/user.model';
 import { authenticatedUser } from '../model/authenticateduser.Model';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
+  authenticatedUser$  = new BehaviorSubject<authenticatedUser|null>(null);
+  
   userModel:authenticatedUser = {
     id:1,
     name:'',

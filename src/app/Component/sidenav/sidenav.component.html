@@ -1,0 +1,20 @@
+<!-- <mat-drawer-container class="example-container" autosize style="height:100%;width:100%;" class="bg-light"> 
+    <mat-list role="list">
+        <mat-list-item role="listitem"><button>Item 1</button></mat-list-item>
+        <mat-list-item role="listitem">Item 2</mat-list-item>
+        <mat-list-item role="listitem">Item 3</mat-list-item>
+      </mat-list>
+    
+  </mat-drawer-container> -->
+
+  <mat-sidenav-container class="sidenav-container bg-light">
+    <mat-sidenav mode="side" opened>
+      <mat-nav-list>
+        @for (item of userRoutes; track $index) {
+            <a mat-list-item routerLink="{{item.url}}" routerLinkActive="active">{{item.name}}</a>
+
+        }
+      </mat-nav-list>
+    </mat-sidenav>
+  
+  </mat-sidenav-container>

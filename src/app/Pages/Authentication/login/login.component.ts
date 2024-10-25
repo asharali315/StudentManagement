@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastnotificationService } from '../../../Service/toastnotification.service';
 import { AuthenticationService } from '../../../Service/authentication.service';
-import { RouterModule } from '@angular/router';
+import { Route, Router, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -31,7 +31,8 @@ export class LoginComponent {
  // Function to check if a string matches the regex
 
  constructor(public _authService:AuthenticationService,
-            public _notificationSerice:ToastnotificationService
+            public _notificationSerice:ToastnotificationService,
+            private router: Router
  ){}
 
  loginSubmit(){
@@ -53,10 +54,11 @@ export class LoginComponent {
       this._notificationSerice.push('Wrong credentials','2')
       return
     }
-    
-    console.log(result)
-    this._notificationSerice.push('User logged in','1')
 
+    this._authService.authenticatedUser$.next(result);
+    localStorage.setItem('userData',JSON.stringify(result))
+    this._notificationSerice.push('User logged in','1')
+    this.router.navigate(['user/dashboard']);
 
 }
 
