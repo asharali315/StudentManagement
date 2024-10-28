@@ -30,7 +30,7 @@ export class dbService {
   {id:3,name:"Roles",url:'/user/role'},
   {id:4,name:"Leaves Request",url:'/user/leave'},
   {id:7,name:"profile",url:'/user/profile'},
-  {id:10,name:"Courses",url:'/user/courses'},
+  {id:10,name:"Courses",url:'/user/course'},
   {id:11,name:"Assign Course",url:'/user/assigncourses'},
 
 ]
@@ -123,5 +123,17 @@ private studentCourses: studentWithCourse[] = [
     return  userCount
   }
 
+
+  getAllData(name : string){
+    switch(name){
+
+      case 'user':
+      return this.users;  
+      case 'courses':
+      return this.courses;
+
+    }  
+    return []
+  }
 
 }

@@ -1,0 +1,19 @@
+
+<div class="form-container">
+  <form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput formControlName="name" placeholder="Course Name" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="sessionName" placeholder="Session Name" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      {{ isEditMode ? 'Update' : 'Add' }} Course
+    </button>
+    @if(isEditMode){
+        <button mat-button  (click)="onCancelEdit()">Cancel</button>
+    }
+  </form>
+</div>
