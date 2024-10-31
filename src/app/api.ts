@@ -1,3 +1,4 @@
 export const apis = {
-    createCourse:"course",
+    createCourse:"courses",
+    login:"users/login"
 }

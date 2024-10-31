@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AddeditcourseComponent } from "../../Component/addeditcourse/addeditcourse.component";
 import { TableComponent } from "../../../../Component/table/table.component";
 import { dbService } from '../../../../localDb/db.service';
+import { apis } from '../../../../api';
 
 @Component({
   selector: 'app-course',
@@ -13,7 +14,7 @@ import { dbService } from '../../../../localDb/db.service';
 export class CourseComponent implements OnInit {
  allCourse: any[] = []
   constructor(public _dbService:dbService){}
-
+  public url = apis.createCourse
 
   ngOnInit(): void {
    this.allCourse =  this._dbService.getAllData('courses')

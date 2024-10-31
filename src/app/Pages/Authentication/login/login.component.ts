@@ -47,18 +47,25 @@ export class LoginComponent {
       return;
     }
     
-    var result = this._authService.loginUser(this.userLogInData)
+    this._authService.loginUser(this.userLogInData)
+    .subscribe((res:any)=>{
+      this._authService.authenticatedUser$.next(res.data);
+      localStorage.setItem('userData',JSON.stringify(res.data))
+      
+          this._notificationSerice.push(res.message,'1')
+          this.router.navigate(['user/dashboard']);
 
-    if(result === null || result === undefined)
-    {
-      this._notificationSerice.push('Wrong credentials','2')
-      return
+    },
+    (e:any)=>{
+         this._notificationSerice.push(e.error.message,'2')
+
     }
+    )
 
-    this._authService.authenticatedUser$.next(result);
-    localStorage.setItem('userData',JSON.stringify(result))
-    this._notificationSerice.push('User logged in','1')
-    this.router.navigate(['user/dashboard']);
+    // if(result === null || result === undefined)
+    // {
+    //   return
+    // }
 
 }
 

@@ -9,7 +9,7 @@ export function tokeninterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn)
         user = JSON.parse(userData)
 
     const newReq = req.clone({
-    headers: req.headers.append('Authorization', 'Bearer '+user?.token),
+        headers: req.headers.set('Authorization', `Bearer ${user.token}`)
   });
    return next(newReq)
  }

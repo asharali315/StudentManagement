@@ -5,6 +5,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpClient } from '@angular/common/http';
+import { apis } from '../../../../api';
+import { ToastnotificationService } from '../../../../Service/toastnotification.service';
 
 @Component({
   selector: 'app-addeditcourse',
@@ -21,9 +24,9 @@ export class AddeditcourseComponent {
   isEditMode = false;
   editingCourseId: number | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, public _http : HttpClient,public _notificationService : ToastnotificationService) {
     this.courseForm = this.fb.group({
-      id: [null],
+      id: [0],
       name: ['', Validators.required],
       sessionName: ['', Validators.required]
     });
@@ -35,20 +38,27 @@ export class AddeditcourseComponent {
 
   
   onSubmit(): void {
-    if (this.courseForm.valid) {
-      if (this.isEditMode && this.editingCourseId !== null) {
-        // Update existing course
-        const index = this.courses.findIndex(c => c.id === this.editingCourseId);
-        this.courses[index] = this.courseForm.value;
-        this.isEditMode = false;
-        this.editingCourseId = null;
-      } else {
-        // Add new course
-        const newCourse = { ...this.courseForm.value, id: Date.now() };
-        this.courses.push(newCourse);
-      }
-      this.courseForm.reset();
-    }
+    this._http.post(apis.createCourse,this.courseForm.value)
+    .subscribe((res:any)=>{
+      this._notificationService.push(res.message,'1')
+    },(e:any)=>{
+      this._notificationService.push(e.error.message,'2')
+    })
+
+    // if (this.courseForm.valid) {
+    //   if (this.isEditMode && this.editingCourseId !== null) {
+    //     // Update existing course
+    //     const index = this.courses.findIndex(c => c.id === this.editingCourseId);
+    //     this.courses[index] = this.courseForm.value;
+    //     this.isEditMode = false;
+    //     this.editingCourseId = null;
+    //   } else {
+    //     // Add new course
+    //     const newCourse = { ...this.courseForm.value, id: Date.now() };
+    //     this.courses.push(newCourse);
+    //   }
+    //   this.courseForm.reset();
+    // }
   }
 
   onEdit(course: course): void {

@@ -28,15 +28,17 @@ export class SidenavComponent implements OnInit {
       if(res === null)
         {
           var user = localStorage.getItem('userData')
+          
           if(user){
             let userData = JSON.parse(user)
-           this.userRoutes = this._dbService.getUserRoutes(userData.roles[0].id)
+            console.table(userData)
+            this.userRoutes = this._dbService.getUserRoutes(1)
             this._authService.authenticatedUser$.next(userData);
           }
           return;
         }
       
-      this.userRoutes = this._dbService.getUserRoutes(res.roles[0].id)
+      this.userRoutes = this._dbService.getUserRoutes(1)
 
     })
   }
